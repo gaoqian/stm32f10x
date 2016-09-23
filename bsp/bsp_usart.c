@@ -1,0 +1,112 @@
+/**
+  * @file bsp_usart.c
+  *
+  * @brief usart config
+  *
+  * @author Hins Shum
+  *
+  * @data 2016/09/23 23:26:20
+  *
+  * @version v1.0
+  */
+/* include header file */
+#include "bsp_usart.h"
+
+/******************************************************************************/
+/*                            USART1                                          */
+/*                         Configuration                                      */
+/******************************************************************************/
+/**
+  * @brief  initialize usart1 gpio
+  * @author Hins Shum
+  * @data   2016/09/23
+  * @param  None
+  * @retval None
+  */
+static void bsp_usart1_gpio_init(void)
+{
+    /* usart1 gpio register */
+    GPIO_InitTypeDef GPIO_InitStructure;
+    /* enable usart1 gpio rcc clock */
+    RCC_APB2PeriphClockCmd(USART1_GPIO_PORT_CLK, ENABLE);
+    /* configure usart1 tx as alternate function push-pull */
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Pin = USART1_TX_PIN;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(USART1_GPIO_PORT, &GPIO_InitStructure);
+    /* configure usart1 rx as input floating */
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_InitStructure.GPIO_Pin = USART1_RX_PIN;
+    GPIO_Init(USART1_GPIO_PORT, &GPIO_InitStructure);
+} /* end bsp_usart1_gpio_init */
+
+/**
+  * @brief  initialize usart1 nvic
+  * @author Hins Shum
+  * @data   2016/09/23
+  * @param  None
+  * @retval None
+  */
+static void bsp_usart1_nvic_init(void)
+{
+
+} /* end bsp_usart1_nvic_init */
+
+/**
+  * @brief  write configuration value to register of usart1
+  * @author Hins Shum
+  * @data   2016/09/23
+  * @param  None
+  * @retval None
+  */
+static void bsp_usart1_register_init(void)
+{
+    /* usart1 register */
+    USART_InitTypeDef USART_InitStructure;
+    /* enable usart1 rcc clock */
+    RCC_APB2PeriphClockCmd(USART1_RCC_CLK, ENABLE);
+    /* usart1 configured as follow:
+            - baudrate = 115200 baud
+            - word length = 8 Bits
+            - one stop bit
+            - no parity
+            - hardware flow control disabled (RTS and CTS signals)
+            - receive and transmit enabled
+     */
+    USART_InitStructure.USART_BaudRate = USART1_BAUDRATE;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits = USART_StopBits_1;
+    USART_InitStructure.USART_Parity = USART_Parity_No;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+    /* write configuration value to register of usart1 */
+    USART_Init(USART1, &USART_InitStructure);
+    /* usart1 recieve interrupt config */
+    bsp_usart1_nvic_init();
+    /* enable usart1 */
+    USART_Cmd(USART1, ENABLE);
+} /* end bsp_usart1_register_init */
+
+/**
+  * @brief  initialize usart1
+  * @author Hins Shum
+  * @data   2016/09/23
+  * @param  None
+  * @retval successful value of usart1 initialization
+  */
+int32_t bsp_usart1_init(void)
+{
+    /* initialize usart1 gpio */
+    bsp_usart1_gpio_init();
+    /* initialize usart1 register */
+    bsp_usart1_register_init();
+
+    return 0;
+}
+/******************************************************************************/
+/*                            USART1                                          */
+/*                             End                                            */
+/******************************************************************************/
+
+
+
