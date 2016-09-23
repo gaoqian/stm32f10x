@@ -30,6 +30,16 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+
+/**
+  * @brief  define this marco because program use freertos
+  * @author Hins Shum
+  * @data   2016/09/23
+  */
+#ifndef USE_FREERTOS
+    #define USE_FREERTOS
+#endif
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -105,9 +115,11 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
+#ifndef USE_FREERTOS
 void SVC_Handler(void)
 {
 }
+#endif
 
 /**
   * @brief  This function handles Debug Monitor exception.
@@ -123,19 +135,22 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
+#ifndef USE_FREERTOS
 void PendSV_Handler(void)
 {
 }
+#endif
 
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
   * @retval None
   */
+#ifndef USE_FREERTOS
 void SysTick_Handler(void)
 {
 }
-
+#endif
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */

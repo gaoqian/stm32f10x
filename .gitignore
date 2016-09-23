@@ -1,0 +1,7 @@
+#Debug Dir
+/proj_mdk_arm/DebugConfig
+/proj_mdk_arm/Listings
+/proj_mdk_arm/Objects
+
+#special files
+/proj_mdk_arm/stm32f10x_boot.uvguix.Administrator
