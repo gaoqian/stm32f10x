@@ -1,7 +1,7 @@
 /**
   * @file bsp_usart.c
   *
-  * @brief usart config
+  * @brief usart initialization
   *
   * @author Hins Shum
   *
