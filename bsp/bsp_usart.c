@@ -102,7 +102,27 @@ int32_t bsp_usart1_init(void)
     bsp_usart1_register_init();
 
     return 0;
-}
+} /* end bsp_usart1_init */
+
+/**
+  * @brief  send a character on serial port
+  * @author Hins Shum
+  * @data   2016/09/24
+  * @param  c : a character will be send on serial port
+  * @retval None
+  */
+void bsp_serial_putc(const char c)
+{
+    /* wait the content of the TDR register has been transferred into the shift register */
+    while(RESET == USART_GetFlagStatus(USART1, USART_FLAG_TXE));
+    /* output the character */
+    USART_SendData(USART1, c);
+    /* if \n, also do \r */
+    if('\n' == c) {
+        bsp_serial_putc('\r');
+    }
+} /* end bsp_serial_putc */
+
 /******************************************************************************/
 /*                            USART1                                          */
 /*                             End                                            */

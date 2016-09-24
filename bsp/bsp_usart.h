@@ -14,7 +14,7 @@
 /* header file include */
 #include "stm32f10x.h"
 
-/* define macro */
+/* macro */
 /**
   * @brief  usart1 macro
   * @author Hins Shum
@@ -27,7 +27,8 @@
 #define USART1_RX_PIN                 GPIO_Pin_10
 #define USART1_BAUDRATE               115200
 
-/* extern variable */
+/* extern function */
 extern int32_t bsp_usart1_init(void);
+extern void bsp_serial_putc(const char c);
 
 #endif /* end for bsp_usart.h */

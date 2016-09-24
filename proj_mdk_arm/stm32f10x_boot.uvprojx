@@ -334,7 +334,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F10X_HD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\bsp;..\os\config;..\os\include;..\os\portable\ARM_CM3;..\cpu;..\cpu\CM3;..\cpu\config;..\lib_stm32\inc</IncludePath>
+              <IncludePath>..\bsp;..\common;..\user\board;..\os\config;..\os\include;..\os\portable\ARM_CM3;..\cpu;..\cpu\CM3;..\cpu\config;..\lib_stm32\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,6 +403,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>user/board</GroupName>
+          <Files>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\board\board.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>cpu</GroupName>
           <Files>
             <File>
@@ -414,6 +424,16 @@
               <FileName>system_stm32f10x.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\cpu\system_stm32f10x.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>common</GroupName>
+          <Files>
+            <File>
+              <FileName>console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\console.c</FilePath>
             </File>
           </Files>
         </Group>

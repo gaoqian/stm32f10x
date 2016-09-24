@@ -14,7 +14,7 @@
 /* include */
 #include "stm32f10x.h"
 
-/* define */
+/* macro */
 /**
   * @brief  led macro
   * @author Hins Shum
@@ -33,7 +33,7 @@
 #define LED_ON              (0)
 #define LED_OFF             (1)
 
-/* extern variable */
+/* extern function */
 extern int32_t bsp_led_gpio_init(void);
 extern void bsp_led_control(uint32_t led_id, uint32_t led_state);
 extern void bsp_led_overturn(uint32_t led_id);
