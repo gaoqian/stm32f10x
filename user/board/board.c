@@ -12,16 +12,17 @@
 /* header file include */
 #include <stddef.h>
 #include <stdbool.h>
+#include "includes.h"
 #include "bsp_led.h"
 #include "bsp_usart.h"
 #include "console.h"
+#include "board.h"
 
-/* define */
-#define BOARD_DEBUG
+/* marco */
 #ifdef BOARD_DEBUG
-#define board_printf(fmt, args...)      console_printf(fmt, ##args)
+#define board_debug(fmt, args...)      console_printf(fmt, ##args)
 #else
-#define board_printf(fmt, args...)
+#define board_debug(fmt, args...)
 #endif
 
 /* typedef */
@@ -33,6 +34,8 @@ init_fnc_t *init_sequence[] = {
     bsp_led_gpio_init,      /* initialize led gpio pin */
     NULL
 };
+
+const uint8_t *version_string[] = VERSION" (" __DATA__ " - " __TIME__ ")" CONFIG_IDENT_STRING; 
 
 /* function prototypes */
 static void hang(void);
@@ -59,7 +62,7 @@ void start_arm(void)
             hang();
         }
     }
-    board_printf("Initialize bsp success!\n");
+    console_printf("Initialize bsp success!\n");
 } /* end start_arm */
 
 /**
@@ -71,7 +74,7 @@ void start_arm(void)
   */
 static void hang(void)
 {
-    board_printf("### ERROR ### Please RESET the board ###\n");
+    console_printf("### ERROR ### Please RESET the board ###\n");
     while(true);
 } /* end hang */
 

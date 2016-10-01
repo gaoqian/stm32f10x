@@ -1,7 +1,7 @@
 /**
  * @file includes.h
  *
- * @bried include C header file, freertos header file and stm32f10x lib header file
+ * @brief include C header file, freertos header file and stm32f10x lib header file
  *
  * @author Hins Shum
  *
@@ -27,5 +27,17 @@
 
 /* user header file */
 
+/* define version */
+#define VERSION                 ("ARM BOOT V1.0")
+#define CONFIG_IDENT_STRING     ("for stm32f103zet6")
+
+/* define config marco */
+#define CFG_LONGHELP
+
+/* define debug marco */
+#define BOARD_DEBUG
+
+/* define task priority */
+#define CMD_TASK_PRIORITY       (tskIDLE_PRIORITY + 3)
 
 #endif /* end for includes.h */

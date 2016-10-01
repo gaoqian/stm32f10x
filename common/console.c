@@ -49,8 +49,8 @@ void console_printf(const char *fmt, ...)
 
     va_start(args, fmt);
     /* For this to work, printbuffer must be larger than
-	 * anything we ever want to print.
-	 */
+     * anything we ever want to print.
+     */
     vsprintf(printbuffer, fmt, args);
     va_end(args);
 
