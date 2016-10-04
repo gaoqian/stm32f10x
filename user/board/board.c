@@ -35,7 +35,8 @@ init_fnc_t *init_sequence[] = {
     NULL
 };
 
-const uint8_t *version_string[] = VERSION" (" __DATA__ " - " __TIME__ ")" CONFIG_IDENT_STRING; 
+const uint8_t version_string[] = VERSION" (" __DATE__ " - " __TIME__ ") "CONFIG_IDENT_STRING; 
+ 
 
 /* function prototypes */
 static void hang(void);

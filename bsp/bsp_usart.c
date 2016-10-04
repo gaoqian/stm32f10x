@@ -49,7 +49,16 @@ static void bsp_usart1_gpio_init(void)
   */
 static void bsp_usart1_nvic_init(void)
 {
+	/* usart1 nvic register */
+	NVIC_InitTypeDef NVIC_InitStructure;
 
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
+	/* clear interrupt flag */
+	USART_ClearFlag(USART1, USART_FLAG_RXNE);
 } /* end bsp_usart1_nvic_init */
 
 /**
@@ -83,6 +92,8 @@ static void bsp_usart1_register_init(void)
     USART_Init(USART1, &USART_InitStructure);
     /* usart1 recieve interrupt config */
     bsp_usart1_nvic_init();
+	/* usart1 rx interrupt enable */
+	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
     /* enable usart1 */
     USART_Cmd(USART1, ENABLE);
 } /* end bsp_usart1_register_init */
@@ -122,6 +133,22 @@ void bsp_serial_putc(const char c)
         bsp_serial_putc('\r');
     }
 } /* end bsp_serial_putc */
+
+/**
+  * @brief  USART1 interrupt function
+  * @author Hins Shum
+  * @data   2016/10/04
+  * @param  NULL
+  * @retval NULL
+  */
+void USART1_IRQHandler(void)
+{
+    uint8_t ch = 0;
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) {
+        ch = (uint8_t)USART_ReceiveData(USART1);
+    }
+    USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+}
 
 /******************************************************************************/
 /*                            USART1                                          */

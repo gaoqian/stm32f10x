@@ -137,7 +137,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -355,7 +355,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -364,10 +364,10 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\Link\stm32f10x_boot.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc></Misc>
+            <Misc>--keep __arm_cmd_*</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -403,6 +403,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>user/app</GroupName>
+          <Files>
+            <File>
+              <FileName>app_cmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\app\app_cmd.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>user/board</GroupName>
           <Files>
             <File>
@@ -434,6 +444,11 @@
               <FileName>console.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\console.c</FilePath>
+            </File>
+            <File>
+              <FileName>command.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\command.c</FilePath>
             </File>
           </Files>
         </Group>

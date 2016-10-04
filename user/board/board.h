@@ -17,7 +17,7 @@
 /* macro */
 
 /* extern variable */
-extern const uint8_t *version_string[];
+extern const uint8_t version_string[];
 
 /* extern function */
 extern void start_arm(void);
