@@ -40,7 +40,7 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd);
   */
 int32_t do_version(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
 {
-    console_printf("\n%s\n", version_string);   /* print version message */
+    console_printf("%s\n", version_string);   /* print version message */
     return 0;
 } /* end do_version */
 
@@ -72,15 +72,19 @@ int32_t cmd_recieve(uint8_t ch, uint32_t len)
     switch (ch) {
         case '\r' :
         case '\n' :
-            *pbuffer = '\0';
             console_printf("\n");
+            *pbuffer = '\0';
+            if(0 == len) {
+                return -3; /* nothing input but enter key press */
+            }
             return (pbuffer - g_cmd_buffer);
         case '\b' :
             if(len) {
                 console_printf("\b \b");
-                return -1;
+                return -1; /* the backspace key is pressed and the length is not zero */
             }
-            return 0;
+            return -2; /* the backspace key is pressed and the length is zero */
+        default : break;
     }
     *pbuffer = ch;
     console_printf("%c", *pbuffer);
@@ -105,8 +109,8 @@ int32_t cmd_run(uint8_t *cmd_buffer)
         return -1;      /* empty command */
     }
 
-    if(strlen((const char *)cmd_buffer) > CFG_CBSIZE) {
-        console_printf("## Command too long! ##");
+    if(strlen((const char *)cmd_buffer) >= (CFG_CBSIZE - 1)) {
+        console_printf("## Command too long! ##\n");
         return -1;  /* the length of command buffer over CFG_CBSIZE */
     }
 
@@ -172,8 +176,8 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd)
 {
     cmd_tbl_t *cmdtp = NULL;
     uint32_t len = strlen((const char *)cmd);
-
     for(cmdtp = &arm_cmd$$Base; cmdtp != &arm_cmd$$Limit; cmdtp++) {
+//    if(1) {
         if(0 == strncmp((const char *)cmd, (const char *)cmdtp->name, len)) {
 			if(len == strlen((const char *)cmdtp->name)) {
 				return cmdtp;
@@ -182,6 +186,7 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd)
     }
 	return NULL;
 } /* end cmd_find */
+
 
 
 /******************************************************************************/

@@ -137,7 +137,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -367,7 +367,7 @@
             <ScatterFile>.\Link\stm32f10x_boot.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--keep __arm_cmd_*</Misc>
+            <Misc>--keep=command.o(arm_cmd)</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -386,6 +386,11 @@
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_nvic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_nvic.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -409,6 +414,11 @@
               <FileName>app_cmd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\app\app_cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\app\app_led.c</FilePath>
             </File>
           </Files>
         </Group>

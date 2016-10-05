@@ -13,6 +13,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "includes.h"
+#include "bsp_nvic.h"
 #include "bsp_led.h"
 #include "bsp_usart.h"
 #include "console.h"
@@ -25,13 +26,25 @@
 #define board_debug(fmt, args...)
 #endif
 
+/* task function prototypes */
+extern void app_cmd_creat(void);
+extern void app_led_creat(void);
+
 /* typedef */
 typedef int32_t (init_fnc_t)(void);
+typedef void (task_creat_t)(void);
 
 /* variables */
 init_fnc_t *init_sequence[] = {
+    bsp_nvic_init,          /* initialize nvic register */
     bsp_usart1_init,        /* initialize usart1 and gpio pin */
     bsp_led_gpio_init,      /* initialize led gpio pin */
+    NULL
+};
+
+task_creat_t *task_creat_sequence[] = {
+    app_led_creat,          /* creat led task */
+    app_cmd_creat,          /* creat command task */
     NULL
 };
 
@@ -56,6 +69,7 @@ static void hang(void);
 void start_arm(void)
 {
     init_fnc_t **init_fnc_ptr = NULL;
+    task_creat_t **task_creat_ptr = NULL;
 
     for(init_fnc_ptr = init_sequence; *init_fnc_ptr; ++init_fnc_ptr) {
         if(0 != (*init_fnc_ptr)()) {
@@ -64,6 +78,11 @@ void start_arm(void)
         }
     }
     console_printf("Initialize bsp success!\n");
+
+    for(task_creat_ptr = task_creat_sequence; *task_creat_ptr; ++task_creat_ptr) {
+        (*task_creat_ptr)();
+    }
+    console_printf("Task creat success!\n");
 } /* end start_arm */
 
 /**

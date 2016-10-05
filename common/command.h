@@ -28,8 +28,16 @@ struct cmd_tbl_s
 };
 typedef struct cmd_tbl_s cmd_tbl_t;
 
+typedef struct cmd_info_s
+{
+    uint32_t len;
+    uint8_t buffer[CFG_CBSIZE];
+    bool is_recieveing;
+    QueueHandle_t cmd_queue;
+} cmd_info_t;
+
 /* define macro */
-#define STRUCT_SECTION  __attribute__((unused, section(".arm_cmd")))
+#define STRUCT_SECTION  __attribute__((unused, section("arm_cmd")))
 
 #if defined CFG_LONGHELP
     #define ARM_CMD(name, maxargs, cmd, usage, help) \

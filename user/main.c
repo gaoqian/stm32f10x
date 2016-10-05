@@ -27,7 +27,11 @@
   */
 int main(void)
 {
-    start_arm();
+    /* board level initialization */
+    start_arm();    
+    /* start the scheduler */
+    vTaskStartScheduler();
+    /* dead loop */
     while(true);
 } /* end main */
 
@@ -35,4 +39,3 @@ int main(void)
 /*                              Main                                          */
 /*                              End                                           */
 /******************************************************************************/
-

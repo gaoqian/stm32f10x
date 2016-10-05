@@ -42,5 +42,6 @@
 
 /* define task priority */
 #define CMD_TASK_PRIORITY       (tskIDLE_PRIORITY + 3)
+#define LED_TASK_PRIORITY       (tskIDLE_PRIORITY + 0)
 
 #endif /* end for includes.h */

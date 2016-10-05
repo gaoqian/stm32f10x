@@ -15,14 +15,18 @@
 #include "command.h"
 #include "console.h"
 
-/* typedef variable */
-typedef struct cmd_info_s
-{
-    uint32_t len;
-    uint8_t buffer[CFG_CBSIZE];
-    bool is_recieveing;
-} cmd_info_t;
+/* marco */
+#define delay_ms_cmd(t)     vTaskDelay(t/portTICK_RATE_MS)
 
+#if defined CMD_DEBUG
+    #define cmd_debug(fmt, args...)     console_printf(fmt, ##args)
+#else
+    #define cmd_debug(fmt, args...)
+#endif
+
+#define CMD_QUEUE_RECIEVE_MAXDELAY      (0xFFU)
+
+/* typedef variable */
 cmd_info_t cmd_info;
 
 /******************************************************************************/
@@ -38,7 +42,11 @@ cmd_info_t cmd_info;
   */
 static void task_init(void)
 {
-
+    cmd_info.cmd_queue = xQueueCreate(5, sizeof(uint8_t));
+    if(NULL == cmd_info.cmd_queue) {
+        cmd_debug("### Command Queue Creat ERROR ### Please RESET the board ###\n");
+        while(true);
+    }
 } /* end task_init */
 
 /**
@@ -56,10 +64,16 @@ void cmd_task(void *pvParameters)
         console_printf(CFG_PROMPT); /* print prompt */
         cmd_info.is_recieveing = true;
         while(cmd_info.is_recieveing) {
-            if(1) {
+            if(xQueueReceive(cmd_info.cmd_queue, &ch, CMD_QUEUE_RECIEVE_MAXDELAY)) { /* wait for the message queue to arrive */
                 switch (cmd_recieve(ch, cmd_info.len)) {
-                    case -1 : cmd_info.len--; break;    /* bacaspace button press */
-                    case 0 : cmd_info.len++; break;     /* enter button not press */
+                    case -2 : break;                    /* backspace button press when len is zero */
+                    case -1 : cmd_info.len--; break;    /* backspace button press */
+                    case 0 :                            /* enter button not press */
+                        if(cmd_info.len < (CFG_CBSIZE - 1)) {
+                            cmd_info.len++;
+                        }
+                        break;
+                    case -3 :                           /* nothing input but enter key press */
                     default :                           /* enter button press */
                         strcpy((char *)cmd_info.buffer, (const char *)g_cmd_buffer);
                         if(cmd_run(cmd_info.buffer) <= 0) {

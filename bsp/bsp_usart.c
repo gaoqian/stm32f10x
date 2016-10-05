@@ -10,7 +10,12 @@
   * @version v1.0
   */
 /* include header file */
+#include "includes.h"
 #include "bsp_usart.h"
+#include "command.h"
+
+/* variables prototypes */
+extern cmd_info_t cmd_info;
 
 /******************************************************************************/
 /*                            USART1                                          */
@@ -144,10 +149,16 @@ void bsp_serial_putc(const char c)
 void USART1_IRQHandler(void)
 {
     uint8_t ch = 0;
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) {
         ch = (uint8_t)USART_ReceiveData(USART1);
+        xQueueSendFromISR(cmd_info.cmd_queue, &ch, &xHigherPriorityTaskWoken);
     }
     USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+    /* to determine whether there is a high priority task to be executed */
+    if(pdFALSE != xHigherPriorityTaskWoken) {
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    }
 }
 
 /******************************************************************************/
