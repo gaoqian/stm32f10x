@@ -331,7 +331,7 @@
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F10X_HD</Define>
               <Undefine></Undefine>
               <IncludePath>..\bsp;..\common;..\user\board;..\os\config;..\os\include;..\os\portable\ARM_CM3;..\cpu;..\cpu\CM3;..\cpu\config;..\lib_stm32\inc</IncludePath>

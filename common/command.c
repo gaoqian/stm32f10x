@@ -52,6 +52,74 @@ ARM_CMD(
     NULL
 );
 
+/**
+  * @brief  prints all commands and their usage information
+  * @author Hins Shum
+  * @data   2016/10/06
+  * @param  cmdtp : command data
+  *         argc : number of parameters
+  *         argv : parameters string
+  * @retval return 0 if the function succeeds
+  */
+int32_t do_help(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
+{
+    uint32_t cmd_item = &arm_cmd$$Limit - &arm_cmd$$Base; /* get a total of multiple commands */
+    uint32_t i = 0;
+    cmd_tbl_t *cmd_array[cmd_item];
+
+    if(1 == argc) {
+        cmdtp = &arm_cmd$$Base;
+        /* make array of commands from arm_cmd section */
+        for(i = 0; i < cmd_item; i++) {
+            cmd_array[i] = cmdtp++;
+        }
+        /* print short help (usage) */
+        for(i = 0; i < cmd_item; i++) {
+            if(NULL == cmd_array[i]->usage) {
+                continue;
+            }
+            console_printf("%s\n", cmd_array[i]->usage);
+        }
+        return 0;
+    }
+    /* print long help (help) */
+    for(i = 1; i < argc; i++) {
+         if(NULL != (cmdtp = cmd_find(argv[i]))) {
+#if defined CFG_LONGHELP
+             /* long help */
+             console_printf("%s ", cmdtp->name);
+             if(cmdtp->help) {
+                console_printf("%s\n", cmdtp->help);
+             } else {
+                console_printf("- No help available.\n");
+             }
+#else
+             /* short usage */
+             if(cmdtp->usage) {
+                 console_printf("%s\n", cmdtp->usage);
+             }
+#endif
+         } else {
+             console_printf("Unknown command '%s' - try 'help' without arguments for list of allknown commands\n", argv[i]);
+         }
+    }
+    return 0;
+}
+
+ARM_CMD(
+    help,
+    CFG_MAXARGS,
+    do_help,
+    "help    - print online help",
+    "[command ...]\n"
+    "    - show help information (for 'command')\n"
+	"'help' prints online help for the monitor commands.\n\n"
+	"Without arguments, it prints a short usage message for all commands.\n\n"
+	"To get detailed help information for specific commands you can type\n"
+    "'help' with one or more command names as arguments."
+);
+
+
 /******************************************************************************/
 /*                            Command                                         */
 /*                             Func                                           */
@@ -177,7 +245,6 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd)
     cmd_tbl_t *cmdtp = NULL;
     uint32_t len = strlen((const char *)cmd);
     for(cmdtp = &arm_cmd$$Base; cmdtp != &arm_cmd$$Limit; cmdtp++) {
-//    if(1) {
         if(0 == strncmp((const char *)cmd, (const char *)cmdtp->name, len)) {
 			if(len == strlen((const char *)cmdtp->name)) {
 				return cmdtp;
