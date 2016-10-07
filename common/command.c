@@ -20,6 +20,9 @@ uint8_t g_cmd_buffer[CFG_CBSIZE];
 extern cmd_tbl_t arm_cmd$$Base;
 extern cmd_tbl_t arm_cmd$$Limit;
 
+/* marco */
+#define cmd_printf(fmt, args...)        console_printf(fmt, ##args)
+
 /* static function prototypes */
 static int32_t cmd_parse_line(uint8_t *line, uint8_t *argv[]);
 static cmd_tbl_t *cmd_find(const uint8_t *cmd);
@@ -40,7 +43,7 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd);
   */
 int32_t do_version(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
 {
-    console_printf("%s\n", version_string);   /* print version message */
+    cmd_printf("%s\n", version_string);   /* print version message */
     return 0;
 } /* end do_version */
 
@@ -78,7 +81,7 @@ int32_t do_help(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
             if(NULL == cmd_array[i]->usage) {
                 continue;
             }
-            console_printf("%s\n", cmd_array[i]->usage);
+            cmd_printf("%s\n", cmd_array[i]->usage);
         }
         return 0;
     }
@@ -87,20 +90,20 @@ int32_t do_help(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
          if(NULL != (cmdtp = cmd_find(argv[i]))) {
 #if defined CFG_LONGHELP
              /* long help */
-             console_printf("%s ", cmdtp->name);
+             cmd_printf("%s ", cmdtp->name);
              if(cmdtp->help) {
-                console_printf("%s\n", cmdtp->help);
+                cmd_printf("%s\n", cmdtp->help);
              } else {
-                console_printf("- No help available.\n");
+                cmd_printf("- No help available.\n");
              }
 #else
              /* short usage */
              if(cmdtp->usage) {
-                 console_printf("%s\n", cmdtp->usage);
+                 cmd_printf("%s\n", cmdtp->usage);
              }
 #endif
          } else {
-             console_printf("Unknown command '%s' - try 'help' without arguments for list of allknown commands\n", argv[i]);
+             cmd_printf("Unknown command '%s' - try 'help' without arguments for list of allknown commands\n", argv[i]);
          }
     }
     return 0;
@@ -113,9 +116,9 @@ ARM_CMD(
     "help    - print online help",
     "[command ...]\n"
     "    - show help information (for 'command')\n"
-	"'help' prints online help for the monitor commands.\n\n"
-	"Without arguments, it prints a short usage message for all commands.\n\n"
-	"To get detailed help information for specific commands you can type\n"
+    "'help' prints online help for the monitor commands.\n\n"
+    "Without arguments, it prints a short usage message for all commands.\n\n"
+    "To get detailed help information for specific commands you can type\n"
     "'help' with one or more command names as arguments."
 );
 
@@ -140,7 +143,7 @@ int32_t cmd_recieve(uint8_t ch, uint32_t len)
     switch (ch) {
         case '\r' :
         case '\n' :
-            console_printf("\n");
+            cmd_printf("\n");
             *pbuffer = '\0';
             if(0 == len) {
                 return -3; /* nothing input but enter key press */
@@ -148,14 +151,14 @@ int32_t cmd_recieve(uint8_t ch, uint32_t len)
             return (pbuffer - g_cmd_buffer);
         case '\b' :
             if(len) {
-                console_printf("\b \b");
+                cmd_printf("\b \b");
                 return -1; /* the backspace key is pressed and the length is not zero */
             }
             return -2; /* the backspace key is pressed and the length is zero */
         default : break;
     }
     *pbuffer = ch;
-    console_printf("%c", *pbuffer);
+    cmd_printf("%c", *pbuffer);
     return 0;
 } /* end cmd_recieve */
 
@@ -178,7 +181,7 @@ int32_t cmd_run(uint8_t *cmd_buffer)
     }
 
     if(strlen((const char *)cmd_buffer) >= (CFG_CBSIZE - 1)) {
-        console_printf("## Command too long! ##\n");
+        cmd_printf("## Command too long! ##\n");
         return -1;  /* the length of command buffer over CFG_CBSIZE */
     }
 
@@ -186,11 +189,11 @@ int32_t cmd_run(uint8_t *cmd_buffer)
         return -1;  /* argc is zero, command is empty */
     }
     if(NULL == (cmdtp = cmd_find(argv[0]))) {
-        console_printf("Unkonw command '%s' - try 'help'\n", argv[0]);
+        cmd_printf("Unkonw command '%s' - try 'help'\n", argv[0]);
         return -1;
     }
     if(argc > cmdtp->maxargs) {
-        console_printf("Usage:\n%s\n", cmdtp->usage);
+        cmd_printf("Usage:\n%s\n", cmdtp->usage);
         return -1;
     }
     if(0 != cmdtp->cmd(cmdtp, argc, argv)) {
@@ -228,7 +231,7 @@ static int32_t cmd_parse_line(uint8_t *line, uint8_t *argv[])
         }
         *line++ = '\0';
     }
-    console_printf("** Too many args (max %d) **\n", CFG_MAXARGS);
+    cmd_printf("** Too many args (max %d) **\n", CFG_MAXARGS);
     return nargs;
 } /* end cmd_parse_line */
 
@@ -246,12 +249,12 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd)
     uint32_t len = strlen((const char *)cmd);
     for(cmdtp = &arm_cmd$$Base; cmdtp != &arm_cmd$$Limit; cmdtp++) {
         if(0 == strncmp((const char *)cmd, (const char *)cmdtp->name, len)) {
-			if(len == strlen((const char *)cmdtp->name)) {
-				return cmdtp;
-			}
-		}
+            if(len == strlen((const char *)cmdtp->name)) {
+                return cmdtp;
+            }
+        }
     }
-	return NULL;
+    return NULL;
 } /* end cmd_find */
 
 

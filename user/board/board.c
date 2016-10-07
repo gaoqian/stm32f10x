@@ -21,10 +21,12 @@
 
 /* marco */
 #ifdef BOARD_DEBUG
-#define board_debug(fmt, args...)      console_printf(fmt, ##args)
+    #define board_debug(fmt, args...)      console_printf(fmt, ##args)
 #else
-#define board_debug(fmt, args...)
+    #define board_debug(fmt, args...)
 #endif
+
+#define board_printf(fmt, args...)      console_printf(fmt, ##args)
 
 /* task function prototypes */
 extern void app_cmd_creat(void);
@@ -77,12 +79,12 @@ void start_arm(void)
             hang();
         }
     }
-    console_printf("Initialize bsp success!\n");
+    board_printf("Initialize bsp success!\n");
 
     for(task_creat_ptr = task_creat_sequence; *task_creat_ptr; ++task_creat_ptr) {
         (*task_creat_ptr)();
     }
-    console_printf("Task creat success!\n");
+    board_printf("Task creat success!\n");
 } /* end start_arm */
 
 /**
@@ -94,7 +96,7 @@ void start_arm(void)
   */
 static void hang(void)
 {
-    console_printf("### ERROR ### Please RESET the board ###\n");
+    board_printf("### ERROR ### Please RESET the board ###\n");
     while(true);
 } /* end hang */
 

@@ -24,6 +24,8 @@
     #define cmd_debug(fmt, args...)
 #endif
 
+#define cmd_printf(fmt, args...)        console_printf(fmt, ##args)
+
 #define CMD_QUEUE_RECIEVE_MAXDELAY      (0xFFU)
 
 /* typedef variable */
@@ -61,7 +63,7 @@ void cmd_task(void *pvParameters)
     uint8_t ch = 0;
     task_init();
     while(true) {
-        console_printf(CFG_PROMPT); /* print prompt */
+        cmd_printf(CFG_PROMPT); /* print prompt */
         cmd_info.is_recieveing = true;
         while(cmd_info.is_recieveing) {
             if(xQueueReceive(cmd_info.cmd_queue, &ch, CMD_QUEUE_RECIEVE_MAXDELAY)) { /* wait for the message queue to arrive */
