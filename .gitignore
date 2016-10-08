@@ -4,6 +4,6 @@
 /proj_mdk_arm/Objects
 
 #special files
-/proj_mdk_arm/stm32f10x_boot.uvguix.Administrator
+/proj_mdk_arm/stm32f10x_boot.uvguix.*
 /proj_mdk_arm/JLinkSettings.ini
 /proj_mdk_arm/JLinkLog.txt
