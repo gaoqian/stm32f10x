@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/10/05 16:57:19
+  * @date 2016/10/05 16:57:19
   *
   * @version v1.0
   */
@@ -25,7 +25,7 @@
 /**
   * @brief  app led task function
   * @author Hins Shum
-  * @data   2016/10/05
+  * @date   2016/10/05
   * @param  NULL
   * @retval NULL
   */
@@ -45,7 +45,7 @@ static void led_task(void *pvParameters)
 /**
   * @brief  app led task creat
   * @author Hins Shum
-  * @data   2016/10/05
+  * @date   2016/10/05
   * @param  NULL
   * @retval NULL
   */

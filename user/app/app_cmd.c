@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/10/01 15:51:29
+  * @date 2016/10/01 15:51:29
   *
   * @version v1.0
   */
@@ -38,7 +38,7 @@ cmd_info_t cmd_info;
 /**
   * @brief  task initialization
   * @author Hins Shum
-  * @data   2016/10/01
+  * @date   2016/10/01
   * @parm   NULL
   * @retval NULL
   */
@@ -54,7 +54,7 @@ static void task_init(void)
 /**
   * @brief  app command task function
   * @author Hins Shum
-  * @data   2016/10/01
+  * @date   2016/10/01
   * @param  NULL
   * @retval NULL
   */
@@ -93,7 +93,7 @@ void cmd_task(void *pvParameters)
 /**
   * @brief  app command task creat
   * @author Hins Shum
-  * @data   2016/10/01
+  * @date   2016/10/01
   * @param  NULL
   * @retval NULL
   */

@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/09/24 09:26:50
+  * @date 2016/09/24 09:26:50
   *
   * @version v1.0
   */
@@ -20,7 +20,7 @@
 /**
   * @brief  initialize led gpio
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  None
   * @retval successful value of led gpio initialization
   * @explain    LED      GPIO
@@ -52,7 +52,7 @@ int32_t bsp_led_gpio_init(void)
 /**
   * @brief  set led bright
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  led_id : which led will become bright, LED0 or LED1
   * @retval None
   */
@@ -68,7 +68,7 @@ static void bsp_led_on(uint32_t led_id)
 /**
   * @brief  turn off the led
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  led_id : which led will be turn off, LED0 or LED1
   * @retval None
   */
@@ -84,7 +84,7 @@ static void bsp_led_off(uint32_t led_id)
 /**
   * @brief  control led turn on or turn off
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  led_id : which led will be tcontrol, LED0 or LED1
   * @param  led_state : LED_ON  --> turn on the led
                         LED_OFF --> turn off the led
@@ -102,7 +102,7 @@ void bsp_led_control(uint32_t led_id, uint32_t led_state)
 /**
   * @brief  control led turn over
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  led_id : which led will be turn over, LED0 or LED1
   * @retval None
   */
@@ -111,14 +111,14 @@ void bsp_led_overturn(uint32_t led_id)
     BitAction led_state = Bit_RESET; /* led turn on */
     switch(led_id) {
         case LED0 :
-            if(Bit_RESET == GPIO_ReadOutputDataBit(LED0_GPIO_PORT, LED0_GPIO_PIN)) {
+            if(Bit_RESET == GPIO_ReadOutputdateBit(LED0_GPIO_PORT, LED0_GPIO_PIN)) {
                 led_state = Bit_SET; /* led0 turn off */
             }
             /* led0 state turn over */
             GPIO_WriteBit(LED0_GPIO_PORT, LED0_GPIO_PIN, led_state);
             break;
         case LED1 :
-            if(Bit_RESET == GPIO_ReadOutputDataBit(LED1_GPIO_PORT, LED1_GPIO_PIN)) {
+            if(Bit_RESET == GPIO_ReadOutputdateBit(LED1_GPIO_PORT, LED1_GPIO_PIN)) {
                 led_state = Bit_SET; /* led1 turn off */
             }
             /* led1 state turn over */

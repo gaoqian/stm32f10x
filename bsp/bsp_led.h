@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/09/24 09:26:46
+  * @date 2016/09/24 09:26:46
   *
   * @version v1.0
   */
@@ -18,7 +18,7 @@
 /**
   * @brief  led macro
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   */
 #define LED0                (0)
 #define LED0_GPIO_PORT      GPIOB

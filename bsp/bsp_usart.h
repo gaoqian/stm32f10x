@@ -5,7 +5,7 @@
   *  
   * @author Hins Shum
   *
-  * @data 2016/09/23 23:23:52
+  * @date 2016/09/23 23:23:52
   *
   * @version v1.0
   */
@@ -18,7 +18,7 @@
 /**
   * @brief  usart1 macro
   * @author Hins Shum
-  * @data   2016/09/23
+  * @date   2016/09/23
   */
 #define USART1_RCC_CLK                RCC_APB2Periph_USART1
 #define USART1_GPIO_PORT_CLK          RCC_APB2Periph_GPIOA

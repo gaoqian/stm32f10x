@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/10/05 19:25:42
+  * @date 2016/10/05 19:25:42
   *
   * @version v1.0
   */
@@ -21,7 +21,7 @@
 /**
   * @brief  nvic configuration
   * @author Hins Shum
-  * @data   2016/10/05
+  * @date   2016/10/05
   * @param  NULL
   * @retval 0
   */

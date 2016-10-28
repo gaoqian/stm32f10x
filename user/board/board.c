@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/09/24 14:47:29
+  * @date 2016/09/24 14:47:29
   *
   * @version v1.0
   */
@@ -64,7 +64,7 @@ static void hang(void);
 /**
   * @brief  initialize all devices on the board
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  None
   * @retval None
   */
@@ -90,7 +90,7 @@ void start_arm(void)
 /**
   * @brief  when initialize failed, hang the system
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  None
   * @retval None
   */

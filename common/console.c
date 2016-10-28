@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/09/24 14:11:07
+  * @date 2016/09/24 14:11:07
   *
   * @version v1.0
   */
@@ -23,7 +23,7 @@
 /**
   * @brief  send a string on serial port
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  s : a sting will be send on serial port
   * @retval None
   */
@@ -38,7 +38,7 @@ static void console_puts(const char *s)
 /**
   * @brief  output somethins on the console
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  varargs 
   * @retval None
   */

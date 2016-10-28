@@ -5,7 +5,7 @@
   *  
   * @author Hins Shum
   *
-  * @data    2016/09/23 21:02:12
+  * @date    2016/09/23 21:02:12
   *
   * @version v1.0
   */
@@ -21,7 +21,7 @@
 /**
   * @brief  main function
   * @author Hins Shum
-  * @data   2016/09/23
+  * @date   2016/09/23
   * @param  None
   * @retval None
   */

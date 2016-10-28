@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/10/01 13:56:19
+  * @date 2016/10/01 13:56:19
   *
   * @version v1.0
   */
@@ -35,8 +35,8 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd);
 /**
   * @brief  print version command
   * @author Hins Shum
-  * @data   2016/10/01
-  * @param  cmdtp : command data
+  * @date   2016/10/01
+  * @param  cmdtp : command date
   *         argc : number of parameters
   *         argv : parameters string
   * @retval return 0 if the function succeeds
@@ -58,8 +58,8 @@ ARM_CMD(
 /**
   * @brief  prints all commands and their usage information
   * @author Hins Shum
-  * @data   2016/10/06
-  * @param  cmdtp : command data
+  * @date   2016/10/06
+  * @param  cmdtp : command date
   *         argc : number of parameters
   *         argv : parameters string
   * @retval return 0 if the function succeeds
@@ -130,7 +130,7 @@ ARM_CMD(
 /**
   * @brief  recieves commands into the buffer
   * @author Hins Shum
-  * @data   2016/10/01
+  * @date   2016/10/01
   * @param  ch : recieve a character form monitor
   *         len : the length that has been recieved
   * @retval the length of recieve buffer
@@ -165,7 +165,7 @@ int32_t cmd_recieve(uint8_t ch, uint32_t len)
 /**
   * @brief  parse and execute commands
   * @author Hins Shum
-  * @data   2016/10/01
+  * @date   2016/10/01
   * @param  cmd_buffer : command buffer
   * @retval -1 : command run failed
   *         0 : command run succeed
@@ -205,7 +205,7 @@ int32_t cmd_run(uint8_t *cmd_buffer)
 /**
   * @brief  parse and split command line
   * @author Hins Shum
-  * @data   2016/10/02
+  * @date   2016/10/02
   * @param  line : command line
   *         argv[] : command parameters
   * @retval parameters number
@@ -238,7 +238,7 @@ static int32_t cmd_parse_line(uint8_t *line, uint8_t *argv[])
 /**
   * @brief  find whether the command exists
   * @author Hins Shum
-  * @data   2016/10/02
+  * @date   2016/10/02
   * @param  cmd : command parameter argv[0]
   * @retval command addr
   *         NULL : if command not find

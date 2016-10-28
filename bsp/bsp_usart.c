@@ -5,7 +5,7 @@
   *
   * @author Hins Shum
   *
-  * @data 2016/09/23 23:26:20
+  * @date 2016/09/23 23:26:20
   *
   * @version v1.0
   */
@@ -24,7 +24,7 @@ extern cmd_info_t cmd_info;
 /**
   * @brief  initialize usart1 gpio
   * @author Hins Shum
-  * @data   2016/09/23
+  * @date   2016/09/23
   * @param  None
   * @retval None
   */
@@ -48,7 +48,7 @@ static void bsp_usart1_gpio_init(void)
 /**
   * @brief  initialize usart1 nvic
   * @author Hins Shum
-  * @data   2016/09/23
+  * @date   2016/09/23
   * @param  None
   * @retval None
   */
@@ -69,7 +69,7 @@ static void bsp_usart1_nvic_init(void)
 /**
   * @brief  write configuration value to register of usart1
   * @author Hins Shum
-  * @data   2016/09/23
+  * @date   2016/09/23
   * @param  None
   * @retval None
   */
@@ -106,7 +106,7 @@ static void bsp_usart1_register_init(void)
 /**
   * @brief  initialize usart1
   * @author Hins Shum
-  * @data   2016/09/23
+  * @date   2016/09/23
   * @param  None
   * @retval successful value of usart1 initialization
   */
@@ -123,7 +123,7 @@ int32_t bsp_usart1_init(void)
 /**
   * @brief  send a character on serial port
   * @author Hins Shum
-  * @data   2016/09/24
+  * @date   2016/09/24
   * @param  c : a character will be send on serial port
   * @retval None
   */
@@ -132,7 +132,7 @@ void bsp_serial_putc(const char c)
     /* wait the content of the TDR register has been transferred into the shift register */
     while(RESET == USART_GetFlagStatus(USART1, USART_FLAG_TXE));
     /* output the character */
-    USART_SendData(USART1, c);
+    USART_Senddate(USART1, c);
     /* if \n, also do \r */
     if('\n' == c) {
         bsp_serial_putc('\r');
@@ -142,7 +142,7 @@ void bsp_serial_putc(const char c)
 /**
   * @brief  USART1 interrupt function
   * @author Hins Shum
-  * @data   2016/10/04
+  * @date   2016/10/04
   * @param  NULL
   * @retval NULL
   */
@@ -151,7 +151,7 @@ void USART1_IRQHandler(void)
     uint8_t ch = 0;
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) {
-        ch = (uint8_t)USART_ReceiveData(USART1);
+        ch = (uint8_t)USART_Receivedate(USART1);
         xQueueSendFromISR(cmd_info.cmd_queue, &ch, &xHigherPriorityTaskWoken);
     }
     USART_ClearITPendingBit(USART1, USART_IT_RXNE);
