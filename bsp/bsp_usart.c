@@ -132,7 +132,7 @@ void bsp_serial_putc(const char c)
     /* wait the content of the TDR register has been transferred into the shift register */
     while(RESET == USART_GetFlagStatus(USART1, USART_FLAG_TXE));
     /* output the character */
-    USART_Senddate(USART1, c);
+    USART_SendData(USART1, c);
     /* if \n, also do \r */
     if('\n' == c) {
         bsp_serial_putc('\r');
@@ -151,7 +151,7 @@ void USART1_IRQHandler(void)
     uint8_t ch = 0;
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) {
-        ch = (uint8_t)USART_Receivedate(USART1);
+        ch = (uint8_t)USART_ReceiveData(USART1);
         xQueueSendFromISR(cmd_info.cmd_queue, &ch, &xHigherPriorityTaskWoken);
     }
     USART_ClearITPendingBit(USART1, USART_IT_RXNE);

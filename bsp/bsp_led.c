@@ -111,14 +111,14 @@ void bsp_led_overturn(uint32_t led_id)
     BitAction led_state = Bit_RESET; /* led turn on */
     switch(led_id) {
         case LED0 :
-            if(Bit_RESET == GPIO_ReadOutputdateBit(LED0_GPIO_PORT, LED0_GPIO_PIN)) {
+            if(Bit_RESET == GPIO_ReadOutputDataBit(LED0_GPIO_PORT, LED0_GPIO_PIN)) {
                 led_state = Bit_SET; /* led0 turn off */
             }
             /* led0 state turn over */
             GPIO_WriteBit(LED0_GPIO_PORT, LED0_GPIO_PIN, led_state);
             break;
         case LED1 :
-            if(Bit_RESET == GPIO_ReadOutputdateBit(LED1_GPIO_PORT, LED1_GPIO_PIN)) {
+            if(Bit_RESET == GPIO_ReadOutputDataBit(LED1_GPIO_PORT, LED1_GPIO_PIN)) {
                 led_state = Bit_SET; /* led1 turn off */
             }
             /* led1 state turn over */

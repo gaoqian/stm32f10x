@@ -36,7 +36,7 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd);
   * @brief  print version command
   * @author Hins Shum
   * @date   2016/10/01
-  * @param  cmdtp : command date
+  * @param  cmdtp : command data
   *         argc : number of parameters
   *         argv : parameters string
   * @retval return 0 if the function succeeds
@@ -59,7 +59,7 @@ ARM_CMD(
   * @brief  prints all commands and their usage information
   * @author Hins Shum
   * @date   2016/10/06
-  * @param  cmdtp : command date
+  * @param  cmdtp : command data
   *         argc : number of parameters
   *         argv : parameters string
   * @retval return 0 if the function succeeds
