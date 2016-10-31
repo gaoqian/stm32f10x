@@ -68,18 +68,20 @@ void cmd_task(void *pvParameters)
         while(cmd_info.is_recieveing) {
             if(xQueueReceive(cmd_info.cmd_queue, &ch, CMD_QUEUE_RECIEVE_MAXDELAY)) { /* wait for the message queue to arrive */
                 switch (cmd_recieve(ch, cmd_info.len)) {
-                    case -2 : break;                    /* backspace button press when len is zero */
-                    case -1 : cmd_info.len--; break;    /* backspace button press */
-                    case 0 :                            /* enter button not press */
+                    case -2 : break;                    /* backspace button is pressed when len is zero */
+                    case -1 : cmd_info.len--; break;    /* backspace button is pressed */
+                    case 0 :                            /* enter button is not pressed */
                         if(cmd_info.len < (CFG_CBSIZE - 1)) {
                             cmd_info.len++;
                         }
                         break;
-                    case -3 :                           /* nothing input but enter key press */
-                    default :                           /* enter button press */
-                        strcpy((char *)cmd_info.buffer, (const char *)g_cmd_buffer);
-                        if(cmd_run(cmd_info.buffer) <= 0) {
-                            g_cmd_buffer[0] = '\0';
+                    case -3 :                           /* nothing input but enter key is pressed */
+                    default :                           /* enter button is pressed */
+                        if(cmd_info.len > 0) {
+                            strcpy((char *)cmd_info.buffer, (const char *)g_cmd_buffer);
+                            if(cmd_run(cmd_info.buffer) <= 0) {
+                                g_cmd_buffer[0] = '\0';
+                            }
                         }
                         cmd_info.len = 0;
                         cmd_info.is_recieveing = false;

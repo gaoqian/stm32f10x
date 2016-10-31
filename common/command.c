@@ -146,7 +146,7 @@ int32_t cmd_recieve(uint8_t ch, uint32_t len)
             cmd_printf("\n");
             *pbuffer = '\0';
             if(0 == len) {
-                return -3; /* nothing input but enter key press */
+                return -3; /* nothing input but enter key is pressed */
             }
             return (pbuffer - g_cmd_buffer);
         case '\b' :
