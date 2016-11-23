@@ -20,7 +20,7 @@ struct cmd_tbl_s
 {
     uint8_t *name;      /* command name */
     uint32_t maxargs;   /* the maximum number of parameters the command can receive */
-    int32_t (*cmd)(struct cmd_tbl_s *, int32_t, uint8_t *[]);    /* do command function */
+    int32_t (*cmd)(struct cmd_tbl_s *cmdtp, int32_t argc, uint8_t *argv[]);    /* do command function */
     uint8_t *usage;     /* usage message(short) */
 #if defined CFG_LONGHELP
     uint8_t *help;      /* help message(long) */
@@ -37,14 +37,14 @@ typedef struct cmd_info_s
 } cmd_info_t;
 
 /* define macro */
-#define STRUCT_SECTION  __attribute__((unused, section("arm_cmd")))
+#define STRUCT_SECTION  __attribute__((unused, section("armboot_cmd")))
 
 #if defined CFG_LONGHELP
-    #define ARM_CMD(name, maxargs, cmd, usage, help) \
-    cmd_tbl_t __arm_cmd_##name STRUCT_SECTION = {#name, maxargs, cmd, usage, help}
+    #define ARMBOOT_CMD(name, maxargs, cmd, usage, help) \
+    cmd_tbl_t __armboot_cmd_##name STRUCT_SECTION = {#name, maxargs, cmd, usage, help}
 #else
-    #define ARM_CMD(name, maxargs, cmd, usage) \
-    cmd_tbl_t __arm_cmd_##name STRUCT_SECTION = {#name, maxargs, cmd, usage}
+    #define ARMBOOT_CMD(name, maxargs, cmd, usage) \
+    cmd_tbl_t __armboot_cmd_##name STRUCT_SECTION = {#name, maxargs, cmd, usage}
 #endif
 
 /* extern variable */

@@ -17,8 +17,8 @@
 
 /* variable */
 uint8_t g_cmd_buffer[CFG_CBSIZE];
-extern cmd_tbl_t arm_cmd$$Base;
-extern cmd_tbl_t arm_cmd$$Limit;
+extern cmd_tbl_t armboot_cmd$$Base;
+extern cmd_tbl_t armboot_cmd$$Limit;
 
 /* marco */
 #define cmd_printf(fmt, args...)        console_printf(fmt, ##args)
@@ -43,11 +43,11 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd);
   */
 int32_t do_version(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
 {
-    cmd_printf("%s\n", version_string);   /* print version message */
+    cmd_printf("%s\n\n", version_string);   /* print version message */
     return 0;
 } /* end do_version */
 
-ARM_CMD(
+ARMBOOT_CMD(
     version,
     1,
     do_version,
@@ -66,22 +66,18 @@ ARM_CMD(
   */
 int32_t do_help(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
 {
-    uint32_t cmd_item = &arm_cmd$$Limit - &arm_cmd$$Base; /* get a total of multiple commands */
+    uint32_t cmd_item = &armboot_cmd$$Limit - &armboot_cmd$$Base; /* get a total of multiple commands */
     uint32_t i = 0;
-    cmd_tbl_t *cmd_array[cmd_item];
 
     if(1 == argc) {
-        cmdtp = &arm_cmd$$Base;
-        /* make array of commands from arm_cmd section */
-        for(i = 0; i < cmd_item; i++) {
-            cmd_array[i] = cmdtp++;
-        }
-        /* print short help (usage) */
-        for(i = 0; i < cmd_item; i++) {
-            if(NULL == cmd_array[i]->usage) {
+        cmdtp = &armboot_cmd$$Base;
+        /* find commands from arm_cmd section */
+        for(i = 0; i < cmd_item; i++, cmdtp++) {
+            if(NULL == cmdtp->usage) {
                 continue;
             }
-            cmd_printf("%s\n", cmd_array[i]->usage);
+            /* print short help (usage) */
+            cmd_printf("%s\n", cmdtp->usage);
         }
         return 0;
     }
@@ -109,7 +105,7 @@ int32_t do_help(cmd_tbl_t *cmdtp, int32_t argc, uint8_t *argv[])
     return 0;
 }
 
-ARM_CMD(
+ARMBOOT_CMD(
     help,
     CFG_MAXARGS,
     do_help,
@@ -119,7 +115,7 @@ ARM_CMD(
     "'help' prints online help for the monitor commands.\n\n"
     "Without arguments, it prints a short usage message for all commands.\n\n"
     "To get detailed help information for specific commands you can type\n"
-    "'help' with one or more command names as arguments."
+    "'help' with one or more command names as arguments.\n"
 );
 
 
@@ -247,7 +243,7 @@ static cmd_tbl_t *cmd_find(const uint8_t *cmd)
 {
     cmd_tbl_t *cmdtp = NULL;
     uint32_t len = strlen((const char *)cmd);
-    for(cmdtp = &arm_cmd$$Base; cmdtp != &arm_cmd$$Limit; cmdtp++) {
+    for(cmdtp = &armboot_cmd$$Base; cmdtp != &armboot_cmd$$Limit; cmdtp++) {
         if(0 == strncmp((const char *)cmd, (const char *)cmdtp->name, len)) {
             if(len == strlen((const char *)cmdtp->name)) {
                 return cmdtp;

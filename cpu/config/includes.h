@@ -29,12 +29,13 @@
 
 /* define version */
 #define VERSION                 "ARM BOOT V1.0"
-#define CONFIG_IDENT_STRING     "for stm32f103zet6"
+#define CONFIG_IDENT_STRING     "for stm32f10x"
 
 /* define config marco */
+/* about shell */
 #define CFG_LONGHELP
 #define CFG_CBSIZE      (128)
-#define CFG_PROMPT      ("root@stm32:")
+#define CFG_PROMPT      ("#armboot :")
 #define CFG_MAXARGS     (16)
 
 /* define debug marco */
